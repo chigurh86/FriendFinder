@@ -202,13 +202,13 @@
           var name = $("#name").val().trim()
           var photolink = $("#photo").val().trim()
           var result = $('input[type="radio"]:checked');
-          var resultString = "";
+          var resultString = "" ;
           result.each(function(){
             resultString += $(this).val();
           });
           var str = resultString;
-          var res = str.split("");
-
+          var thingParsed = parseInt(str);
+          var res = thingParsed.split("");
           var newFriend = {
             name:name,
             photo:photolink,
