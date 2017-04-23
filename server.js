@@ -13,24 +13,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-// Star Wars Characters (DATA)
-// =============================================================
-var people = [{
-  {
-  "name":"Ahmed",
-  "photo":"https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
-  "scores":[
-      5,
-      1,
-      4,
-      4,
-      5,
-      1,
-      2,
-      5,
-      4,
-      1
-    ]
-}, {
+// Requires =============================================================
 
-}];
+require("./app/routing/apiRoutes.js")(app);
+require("./app/routing/htmlRoutes.js")(app);
+
+
+// Listener =============================================================
+
+app.listen(PORT, function() {
+  console.log("App listening on PORT " + PORT);
+});
