@@ -7,17 +7,20 @@ module.exports = function(app){
     });
     app.post("/api/friends", function(req, res){
       var newSurvey = req.body;
-      for(var i = 0; i < friends.length; i++){
-        console.log(friends[i].scores);
-        var userScores = friends[i].scores;
-
-        totalDifference = 0;
-        for (var j = 0; j < friends[i].scores[j]; j++) {
-          totalDifference += Math.abs(parseInt(userScores[j]) - parseInt(friends[i].scores[j]));
-          console.log("use score "+ userScores[j]);
-          console.log("each score " + friends[i].scores[j])
+      var parsedScores  = [];
+      for (var j = 0; j < friends.length; j++){
+        for(var i = 0; i < 10; i++){
+          parsedScores.push(parseInt(friends[0].scores[i]));
+          }
       }
-    }
+// splitting the users
+
+
+      var sum = parsedScores.reduce(function(a, b) { return a + b; }, 0);
+      console.log("this is the sum " + sum);
+        totalDifference = 0;
+
+        console.log("these are parsed " + parsedScores);
 
       console.log("total diff " + totalDifference);
       friends.push(newSurvey);

@@ -202,8 +202,12 @@
           var name = $("#name").val().trim()
           var photolink = $("#photo").val().trim()
           var result = $('input[type="radio"]:checked');
-          var resultString = "" ;
-          result.each(function(){
+          if (result==="") {
+            var parsedresult = parseInt(result);
+          }
+          console.log("parsedRes " + parsedresult);
+          var resultString;
+          parsedresult.each(function(){
             resultString += $(this).val();
           });
           var str = resultString;
@@ -212,12 +216,12 @@
             name:name,
             photo:photolink,
             scores:res
-       };
+          };
          $.post("/api/friends", newFriend)
          .done(function(data) {
          console.log(data);
          alert("Adding friend...");
-       });
+         });
        });
 
     </script>
