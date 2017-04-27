@@ -1,33 +1,35 @@
 var friends = require("../data/friends.js");
 
 module.exports = function(app){
+
   app.get("/api/friends", function(req,res) {
-    console.log("We hit this endpoint");
     res.json(friends);
     });
-    app.post("/api/friends", function(req, res){
-      var newSurvey = req.body;
-      var parsedScores  = [];
-      for (var j = 0; j < friends.length; j++){
-        for(var i = 0; i < 10; i++){
-          parsedScores.push(parseInt(friends[0].scores[i]));
-          }
+
+  app.post("/api/friends", function(req, res){
+    var newSurvey = req.body;
+    var userScores = req.body.scores;
+    var match;
+    var leastDiff = 100;
+      for (var i = 0; i < friends.length; i++){
+        let totalDifference = 0;
+        for (var j = 0; j < friends[i].scores.length; j++){
+          totalDifference += Math.abs(parseInt(req.body.scores[j]) - parseInt(friends[i].scores[j]));
+        }
+        if (totalDifference < leastDiff){
+          leastDiff = totalDifference;
+          match = friends[i];
+          console.log(match)
+        }
       }
-// splitting the users
-
-
-      var sum = parsedScores.reduce(function(a, b) { return a + b; }, 0);
-      console.log("this is the sum " + sum);
-        totalDifference = 0;
-
-        console.log("these are parsed " + parsedScores);
-
-      console.log("total diff " + totalDifference);
+      // var sum = parsedScores.reduce(function(a, b) { return a + b; }, 0);
+      // console.log("this is the sum " + sum);
       friends.push(newSurvey);
-      res.json(newSurvey);
+      // res.json(newSurvey);
+      res.json(match);
     });
+
     app.get(friends, function(req, res){
      res.json(friends);
-   });
-
+    });
 };

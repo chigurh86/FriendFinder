@@ -188,8 +188,8 @@
       <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i>
       Submit</button>
     </div>
+      <div class="panel-body" id="well-section"></div>
     </div>
-
     <script
       src="https://code.jquery.com/jquery-3.2.1.min.js"
       integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -202,12 +202,8 @@
           var name = $("#name").val().trim()
           var photolink = $("#photo").val().trim()
           var result = $('input[type="radio"]:checked');
-          if (result==="") {
-            var parsedresult = parseInt(result);
-          }
-          console.log("parsedRes " + parsedresult);
-          var resultString;
-          parsedresult.each(function(){
+          var resultString = "";
+          result.each(function(){
             resultString += $(this).val();
           });
           var str = resultString;
@@ -217,13 +213,24 @@
             photo:photolink,
             scores:res
           };
-         $.post("/api/friends", newFriend)
-         .done(function(data) {
-         console.log(data);
-         alert("Adding friend...");
+         $.post("/api/friends", newFriend).done(function(data) {
+          //  console.log("matching on other page " + JSON.stringify(data));
+          //  alert("Adding friend...");
+           for (var i = 0; i < data.length; i++) {
+             var wellSection = $("<div>");
+             wellSection.addClass("well");
+             wellSection.attr("id", "table-well-" + i);
+             $("#tableSection").append(wellSection);
+             $("#table-well-" + i).append("<h4>Name:" + data[i].name + "</h4>");
+             $("#table-well-" + i).append("<img>" + data[i].photo + "</img>");
+             $("#table-well-" + i).append("<h5>Table Number: " + data[i].scores + "</h5>");
+           }
+         });
+         $.get("/api/friends", function(data) {
+
          });
        });
-
     </script>
+
   </body>
 </html>
