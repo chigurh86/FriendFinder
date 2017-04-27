@@ -188,7 +188,7 @@
       <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i>
       Submit</button>
     </div>
-      <div class="panel-body" id="well-section"></div>
+      <div class="panel-body" id="well-section" style="text-align:center;"></div>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -214,23 +214,19 @@
             scores:res
           };
          $.post("/api/friends", newFriend).done(function(data) {
-          //  console.log("matching on other page " + JSON.stringify(data));
-          //  alert("Adding friend...");
-           for (var i = 0; i < data.length; i++) {
-             var wellSection = $("<div>");
-             wellSection.addClass("well");
-             wellSection.attr("id", "table-well-" + i);
-             $("#tableSection").append(wellSection);
-             $("#table-well-" + i).append("<h4>Name:" + data[i].name + "</h4>");
-             $("#table-well-" + i).append("<img>" + data[i].photo + "</img>");
-             $("#table-well-" + i).append("<h5>Table Number: " + data[i].scores + "</h5>");
-           }
+           console.log("matching on other page " + JSON.stringify(data));
+           alert("Adding friend...");
+
          });
          $.get("/api/friends", function(data) {
+            $("#well-section").empty();
+            $("#well-section").append("<h2>Recommended Friend</h2>");
+            $("#well-section").append("<h4>"+ data[0].name+"</h4>");
+            $("#well-section").append("<p>"+"Score: "+data[0].scores+"</p>");
+            $("#well-section").append("<img src="+data[0].photo+">");
 
+          });
          });
-       });
     </script>
-
   </body>
 </html>

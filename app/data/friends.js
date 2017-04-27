@@ -1,6 +1,6 @@
 var people = [{
   name:"Tony",
-  photo:"www.tonycaos.com",
+  photo:"http://tonycaos.com/images/tonyface.png",
   scores:["1","1","1","1","1","1","1","1","1","1"]
 }];
 
